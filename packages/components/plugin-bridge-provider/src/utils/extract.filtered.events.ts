@@ -56,8 +56,8 @@ export const parseHideLogs = (hideLogs) => {
 };
 
 export default (
-  config: EventFilterConfig, 
-  events: Events, 
+  config: EventFilterConfig,
+  events: Events | undefined,
   filters,
   validation?: ValidationRecords
 ) => {
