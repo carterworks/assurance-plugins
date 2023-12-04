@@ -1,0 +1,21 @@
+{
+  "name": "events-table",
+  "version": "1.0.0",
+  "description": "Plugin that shows events in a tabular format",
+  "main": "index.js",
+  "author": "Adobe Systems",
+  "license": "Apache-2.0",
+  "private": false,
+  "scripts": {
+    "build": "npm-run-all --npm-path npm --parallel --aggregate-output build:src build:defs",
+    "build:src": "quarry-scripts rollup",
+    "build:defs": "quarry-scripts tsc --declaration --emitDeclarationOnly -p .",
+    "start": "parcel src/index.html --cache-dir ./.parcel-cache  --https --cert ../../../certs/server.crt --key ../../../certs/server.key --host localhost.corp.adobe.com -p 4321 --no-cache"
+  },
+  "dependencies": {
+    "@assurance/plugin-bridge-provider": "1.0.0"
+  },
+  "devDependencies": {
+    "parcel": "^2.10.3"
+  }
+}
