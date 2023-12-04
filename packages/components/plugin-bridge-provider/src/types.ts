@@ -61,7 +61,7 @@ export type BridgeEvents = {
 
 export type BridgeNavigation = {
   path: string;
-  filters: Filters; 
+  filters: Filters;
 }
 
 export type BridgeSelectedEvents = {
