@@ -10,7 +10,7 @@
     "build": "npm-run-all --npm-path npm --parallel --aggregate-output build:src build:defs",
     "build:src": "quarry-scripts rollup",
     "build:defs": "quarry-scripts tsc --declaration --emitDeclarationOnly -p .",
-    "start": "parcel src/index.html --cache-dir ./.parcel-cache  --https --cert ../../../certs/server.crt --key ../../../certs/server.key --host localhost.corp.adobe.com -p 4321 --no-cache"
+    "start": "parcel src/index.html --cache-dir ./.parcel-cache  --https --cert $CERT_PATH --key $KEY_PATH --host dev.adobe.com -p 4321 --no-cache"
   },
   "dependencies": {
     "@assurance/plugin-bridge-provider": "1.0.0"
