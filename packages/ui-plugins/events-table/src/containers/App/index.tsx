@@ -57,9 +57,9 @@ const timestampToDateString = (timestamp: number) =>
 
 const rotateTable = (
   events?: BridgeEvent[]
-): { rowNames: string[]; data: string[][] } => {
+): { columnNames: string[]; rowNames: string[]; data: string[][] } => {
   if (!events || events.length === 0) {
-    return { rowNames: [], data: [] };
+    return { columnNames: [], rowNames: [], data: [] };
   }
   const sortedEvents = [...events].sort((a, b) => a.timestamp - b.timestamp);
 
@@ -83,8 +83,6 @@ const rotateTable = (
     name: string;
     getter: (event: BridgeEvent) => string;
   }[] = [
-    { name: "uuid", getter: createSimpleGetter("uuid") },
-    { name: "eventNumber", getter: createSimpleGetter("eventNumber") },
     {
       name: "timestamp",
       getter: event => timestampToDateString(event.timestamp)
@@ -95,18 +93,28 @@ const rotateTable = (
       getter: createSimpleGetter(`payload.${payloadKey}`)
     }))
   ];
+  const columnNames = sortedEvents.map(event => event.uuid);
   const rowNames = rowDefinitions.map(rowDef => rowDef.name);
   const data = rowDefinitions.map(({ getter }) =>
     sortedEvents.map(e => getter(e))
   );
 
-  return { rowNames, data };
+  return { columnNames, rowNames, data };
 };
 
 const SimpleTable = ({ events }: { events: BridgeEvent[] }) => {
-  const { rowNames, data } = rotateTable(events);
+  const { rowNames, columnNames, data } = rotateTable(events);
+  console.log("CARTER <SimpleTable>", { rowNames, columnNames, data });
   return (
     <table>
+      <thead>
+        <tr>
+          <th />
+          {columnNames.map((columnName, columnIndex) => (
+            <th key={`column-${columnIndex}`}>{columnName}</th>
+          ))}
+        </tr>
+      </thead>
       <tbody>
         {data.map((row, rowIndex) => (
           <tr key={`row-${rowIndex}`}>
@@ -131,7 +139,7 @@ const SpectrumTable = ({ events }: { events: BridgeEvent[] }) => {
 
 const Inner = () => {
   const events: BridgeEvent[] = useEvents();
-  const [useSpectrum, setUseSpectrum] = React.useState(true);
+  const [useSpectrum, setUseSpectrum] = React.useState(false);
   if (!events) {
     return <ProgressCircle aria-label="Loading…" isIndeterminate />;
   }
