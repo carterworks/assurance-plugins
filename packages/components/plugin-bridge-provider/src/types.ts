@@ -55,6 +55,18 @@ export type BridgeConnections = {
   connections: GenericObject[];
 }
 
+export type BridgeEvent = {
+  uuid: string;
+  eventNumber: number;
+  clientId: string;
+  timestamp: number;
+  vendor: string;
+  type: string;
+  payload: GenericObject;
+  annotations: unknown[];
+  _internal_adb_props: Record<string, string>;
+};
+
 export type BridgeEvents = {
   events?: Events;
 };
@@ -65,7 +77,7 @@ export type BridgeNavigation = {
 }
 
 export type BridgeSelectedEvents = {
-  selected?: GenericObject[];
+  selected?: BridgeEvent[];
 }
 
 export type BridgeSettings = {
