@@ -15,60 +15,128 @@
  * from Adobe.
  **************************************************************************/
 
-import React from 'react';
-import { 
-  PluginBridgeProvider, 
-  useEnvironment,
-  useFlags,
-  useImsAccessToken,
-  useImsOrg,
-  useNavigation,
-  useEvents,
-  useTenant,
-  useValidation,
-} from '@assurance/plugin-bridge-provider';
+import React from "react";
+import {
+  PluginBridgeProvider,
+  useEvents
+} from "@assurance/plugin-bridge-provider";
+import get from "lodash/get";
 
+type BridgePayload = Record<string, unknown>;
+
+interface BridgeEvent {
+  uuid: string;
+  eventNumber: number;
+  clientId: string;
+  timestamp: number;
+  vendor: string;
+  type: string;
+  payload: BridgePayload;
+  annotations: unknown[];
+  _internal_adb_props: Record<string, string>;
+}
+
+// For this table, the number of columns is dynamic: each event is a column,
+// and the rows are:
+// - uuid
+// - eventNumber
+// - timestamp
+// - vendor
+// and then each key in the payload is also a row.
+// So we need to create the columns dynamically.
+
+const timestampToDateString = (timestamp: number) =>
+  `${Intl.DateTimeFormat(undefined, {
+    hour: "numeric",
+    minute: "numeric",
+    second: "numeric",
+    fractionalSecondDigits: 3,
+    hour12: false
+  } as Intl.DateTimeFormatOptions).format(timestamp)}`;
+
+const rotateTable = (
+  events?: BridgeEvent[]
+): { rowNames: string[]; data: string[][] } => {
+  if (!events || events.length === 0) {
+    return { rowNames: [], data: [] };
+  }
+  const sortedEvents = [...events].sort((a, b) => a.timestamp - b.timestamp);
+
+  const createSimpleGetter = (prop: string) => (event: BridgeEvent) => {
+    const value = get(event, prop);
+    if (value === null || value === undefined) {
+      return "";
+    }
+    if (typeof value === "object") {
+      return JSON.stringify(value);
+    }
+    return value;
+  };
+
+  const payloadRowsSet = new Set<keyof BridgePayload>();
+  sortedEvents.forEach(event => {
+    Object.keys(event.payload).forEach(key => payloadRowsSet.add(key));
+  });
+
+  const rowDefinitions: {
+    name: string;
+    getter: (event: BridgeEvent) => string;
+  }[] = [
+    { name: "uuid", getter: createSimpleGetter("uuid") },
+    { name: "eventNumber", getter: createSimpleGetter("eventNumber") },
+    {
+      name: "timestamp",
+      getter: event => timestampToDateString(event.timestamp)
+    },
+    { name: "vendor", getter: createSimpleGetter("vendor") },
+    ...Array.from(payloadRowsSet).map(payloadKey => ({
+      name: payloadKey,
+      getter: createSimpleGetter(`payload.${payloadKey}`)
+    }))
+  ];
+  const rowNames = rowDefinitions.map(rowDef => rowDef.name);
+  const data = rowDefinitions.map(({ getter }) =>
+    sortedEvents.map(e => getter(e))
+  );
+
+  return { rowNames, data };
+};
+
+const SimpleTable = ({ events }: { events: BridgeEvent[] }) => {
+  const { rowNames, data } = rotateTable(events);
+  return (
+    <table>
+      <tbody>
+        {data.map((row, rowIndex) => (
+          <tr key={`row-${rowIndex}`}>
+            <th scope="row">{rowNames[rowIndex]}</th>
+            {row.map((cellValue, cellIndex) => {
+              const key = `row-${rowIndex}-cell-${cellIndex}`;
+              if (rowIndex === 0) {
+                return <th key={key}>{cellValue}</th>;
+              }
+              return <td key={key}>{cellValue}</td>;
+            })}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+};
 
 const Inner = () => {
-  const env = useEnvironment();
-  const flags = useFlags();
-  const imsAccsessToken = useImsAccessToken();
-  const imsOrg = useImsOrg();
-  const tenant = useTenant();
-  const navigation = useNavigation();
-  const events = useEvents();
-  const validation = useValidation();
-
-  return (
-    <dl>
-      <dt>Environment</dt>
-      <dd>{env}</dd>
-      <dt>Flags</dt>
-      <dd>{JSON.stringify(flags)}</dd>
-      <dt>IMS Access Token</dt>
-      <dd>{imsAccsessToken}</dd>
-      <dt>IMS Org</dt>
-      <dd>{imsOrg}</dd>
-      <dt>Tenant</dt>
-      <dd>{tenant}</dd>
-      <dt>Navigation</dt>
-      <dd>{navigation}</dd>
-      <dt>Events</dt>
-      <dd>{events?.length || 0}</dd>
-      <dt>Validation</dt>
-      <dd>{Object.keys(validation || {}).length}</dd>
-    </dl>
-  )
+  const events: BridgeEvent[] = useEvents();
+  return <SimpleTable events={events} />;
 };
 
 const App = () => {
   return (
-    <PluginBridgeProvider>
-      <Inner />
-    </PluginBridgeProvider>
+    <React.StrictMode>
+      <PluginBridgeProvider>
+        <Inner />
+      </PluginBridgeProvider>
+    </React.StrictMode>
   );
 };
 
 export default App;
-
-
