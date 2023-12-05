@@ -15,7 +15,18 @@
  * from Adobe.
  **************************************************************************/
 
-import { ProgressCircle, Provider, defaultTheme } from "@adobe/react-spectrum";
+import {
+  Cell,
+  Column,
+  ProgressCircle,
+  Provider,
+  Row,
+  Switch,
+  TableBody,
+  TableHeader,
+  TableView,
+  defaultTheme
+} from "@adobe/react-spectrum";
 import {
   PluginBridgeProvider,
   useEvents
@@ -102,9 +113,10 @@ const rotateTable = (
   return { columnNames, rowNames, data };
 };
 
-const SimpleTable = ({ events }: { events: BridgeEvent[] }) => {
+type EventsTable = (props: { events: BridgeEvent[] }) => JSX.Element;
+
+const SimpleTable: EventsTable = ({ events }: { events: BridgeEvent[] }) => {
   const { rowNames, columnNames, data } = rotateTable(events);
-  console.log("CARTER <SimpleTable>", { rowNames, columnNames, data });
   return (
     <table>
       <thead>
@@ -133,36 +145,50 @@ const SimpleTable = ({ events }: { events: BridgeEvent[] }) => {
   );
 };
 
-const SpectrumTable = ({ events }: { events: BridgeEvent[] }) => {
-  return <div>TODO: {events} length</div>;
+const ComplexTable: EventsTable = ({ events }: { events: BridgeEvent[] }) => {
+  const { rowNames, columnNames, data } = rotateTable(events);
+  return (
+    <TableView>
+      <TableHeader>
+        {/* Leave an empty column for the row names */}
+        {["", ...columnNames].map((columnName, columnIndex) => (
+          <Column key={`column-${columnIndex}`}>{columnName}</Column>
+        ))}
+      </TableHeader>
+      <TableBody>
+        {data.map((row, rowIndex) => (
+          <Row key={`row-${rowIndex}`}>
+            {[rowNames[rowIndex], ...row].map((cellValue, cellIndex) => (
+              <Cell key={`row-${rowIndex}-cell-${cellIndex}`}>{cellValue}</Cell>
+            ))}
+          </Row>
+        ))}
+      </TableBody>
+    </TableView>
+  );
 };
 
 const Inner = () => {
   const events: BridgeEvent[] = useEvents();
-  const [useSpectrum, setUseSpectrum] = React.useState(false);
+  const [useSimpleTable, setUseSimpleTable] = React.useState(false);
   if (!events) {
     return <ProgressCircle aria-label="Loading…" isIndeterminate />;
   }
   if (events.length === 0) {
     return <div>No events yet</div>;
   }
-  if (useSpectrum) {
-    return (
-      <div>
-        <button type="button" onClick={() => setUseSpectrum(!useSpectrum)}>
-          Use simple table
-        </button>
-        <SpectrumTable events={events} />
-      </div>
-    );
-  }
+  const Table: EventsTable = useSimpleTable ? SimpleTable : ComplexTable;
   return (
-    <div>
-      <button type="button" onClick={() => setUseSpectrum(!useSpectrum)}>
-        Use spectrum table
-      </button>
-      <SimpleTable events={events} />
-    </div>
+    <>
+      <Switch
+        isEmphasized
+        isSelected={useSimpleTable}
+        onChange={setUseSimpleTable}
+      >
+        Use simple table
+      </Switch>
+      <Table events={events} />
+    </>
   );
 };
 
