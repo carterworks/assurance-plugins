@@ -15,12 +15,13 @@
  * from Adobe.
  **************************************************************************/
 
-import React from "react";
+import { ProgressCircle, Provider, defaultTheme } from "@adobe/react-spectrum";
 import {
   PluginBridgeProvider,
   useEvents
 } from "@assurance/plugin-bridge-provider";
 import get from "lodash/get";
+import React from "react";
 
 type BridgePayload = Record<string, unknown>;
 
@@ -124,17 +125,47 @@ const SimpleTable = ({ events }: { events: BridgeEvent[] }) => {
   );
 };
 
+const SpectrumTable = ({ events }: { events: BridgeEvent[] }) => {
+  return <div>TODO: {events} length</div>;
+};
+
 const Inner = () => {
   const events: BridgeEvent[] = useEvents();
-  return <SimpleTable events={events} />;
+  const [useSpectrum, setUseSpectrum] = React.useState(true);
+  if (!events) {
+    return <ProgressCircle aria-label="Loading…" isIndeterminate />;
+  }
+  if (events.length === 0) {
+    return <div>No events yet</div>;
+  }
+  if (useSpectrum) {
+    return (
+      <div>
+        <button type="button" onClick={() => setUseSpectrum(!useSpectrum)}>
+          Use simple table
+        </button>
+        <SpectrumTable events={events} />
+      </div>
+    );
+  }
+  return (
+    <div>
+      <button type="button" onClick={() => setUseSpectrum(!useSpectrum)}>
+        Use spectrum table
+      </button>
+      <SimpleTable events={events} />
+    </div>
+  );
 };
 
 const App = () => {
   return (
     <React.StrictMode>
-      <PluginBridgeProvider>
-        <Inner />
-      </PluginBridgeProvider>
+      <Provider theme={defaultTheme}>
+        <PluginBridgeProvider>
+          <Inner />
+        </PluginBridgeProvider>
+      </Provider>
     </React.StrictMode>
   );
 };

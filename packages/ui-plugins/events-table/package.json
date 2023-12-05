@@ -13,6 +13,7 @@
     "start": "parcel src/index.html --cache-dir ./.parcel-cache  --https --cert $CERT_PATH --key $KEY_PATH --host dev.adobe.com -p 4321 --no-cache"
   },
   "dependencies": {
+    "@adobe/react-spectrum": "^3.32.2",
     "@assurance/plugin-bridge-provider": "1.0.0"
   },
   "devDependencies": {
