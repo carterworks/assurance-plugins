@@ -15,77 +15,69 @@
  * from Adobe.
  **************************************************************************/
 
-import React, { useEffect } from 'react';
-import { 
+import React, { useEffect } from "react";
+import {
   ConnectionContext,
   EventContext,
   NavigationContext,
   SelectedEventContext,
   SettingsContext,
-  ValidationContext,
-} from './Contexts';
-import type { 
+  ValidationContext
+} from "./Contexts";
+import type {
   BridgeConnections,
   BridgeEvents,
   BridgeNavigation,
   BridgeSelectedEvents,
   BridgeSettings,
-  BridgeValidation,
-} from './types';
-import extractNavigation from './utils/extract.navigation';
+  BridgeValidation
+} from "./types";
+import extractNavigation from "./utils/extract.navigation";
 
 export type PluginBridgeProviderProps = {
   children?: React.ReactNode;
 };
 
-const PluginBridgeProvider = ({ 
-  children 
-}: PluginBridgeProviderProps) => {
-  const [bridgeConnections, setBridgeConnections] = React.useState<BridgeConnections | null>(null);
-  const [bridgeNavigation, setBridgeNavigation] = React.useState<BridgeNavigation | null>(null);
-  const [bridgeEvents, setBridgeEvents] = React.useState<BridgeEvents | null>(null);
-  const [bridgeSelectedEvents, setBridgeSelectedEvents] = React.useState<BridgeSelectedEvents | null>(null);
-  const [bridgeSettings, setBridgeSettings] = React.useState<BridgeSettings | null>(null);
-  const [bridgeValidation, setBridgeValidation] = React.useState<BridgeValidation | null>(null);
+const PluginBridgeProvider = ({ children }: PluginBridgeProviderProps) => {
+  const [bridgeConnections, setBridgeConnections] =
+    React.useState<BridgeConnections | null>(null);
+  const [bridgeNavigation, setBridgeNavigation] =
+    React.useState<BridgeNavigation | null>(null);
+  const [bridgeEvents, setBridgeEvents] =
+    React.useState<BridgeEvents | null>(null);
+  const [bridgeSelectedEvents, setBridgeSelectedEvents] =
+    React.useState<BridgeSelectedEvents | null>(null);
+  const [bridgeSettings, setBridgeSettings] =
+    React.useState<BridgeSettings | null>(null);
+  const [bridgeValidation, setBridgeValidation] =
+    React.useState<BridgeValidation | null>(null);
 
   useEffect(() => {
     window.pluginBridge.register({
       init(options) {
-        console.log("INIT!", options);
         setBridgeSettings(options);
       },
       navigateTo(navigation) {
-        console.log("NAV", navigation);
         setBridgeNavigation(extractNavigation(navigation));
       },
       receiveConnections(connections) {
-        console.log("CON", connections);
         setBridgeConnections(connections);
       },
       receiveEvents(events) {
-        console.log("events", events);
         setBridgeEvents({ events });
       },
-      receivePlugins(plugins) {
-        console.log("plugins", plugins);
-      },
+      receivePlugins(plugins) {},
       receiveSelectedEvents(selected) {
-        console.log("selectedevents", selected, bridgeEvents);
         setBridgeSelectedEvents({ selected });
       },
-      receiveSession(session) {
-        console.log("session", session);
-      },
+      receiveSession(session) {},
       receiveSettings(settings) {
-        console.log("receiveSettings", settings);
         setBridgeSettings(settings);
       },
       receiveValidation(validation) {
-        console.log("receiveValidation", validation);
         setBridgeValidation({ validation });
       }
     });
-
   }, [window.pluginBridge]);
 
   if (!bridgeSettings) {
@@ -98,16 +90,20 @@ const PluginBridgeProvider = ({
     { context: ConnectionContext, value: bridgeConnections },
     { context: EventContext, value: bridgeEvents },
     { context: SelectedEventContext, value: bridgeSelectedEvents },
-    { context: ValidationContext, value: bridgeValidation },
+    { context: ValidationContext, value: bridgeValidation }
   ];
 
   let Result: React.ReactElement | null = null;
   contexts.forEach(({ context, value }) => {
     const Renderer = context.Provider;
     if (Result == null) {
-      Result = <Renderer value={value as any}>{children}</Renderer> as React.ReactElement;
+      Result = (
+        <Renderer value={value as any}>{children}</Renderer>
+      ) as React.ReactElement;
     } else {
-      Result = <Renderer value={value as any}>{Result}</Renderer> as React.ReactElement;;
+      Result = (
+        <Renderer value={value as any}>{Result}</Renderer>
+      ) as React.ReactElement;
     }
   });
 
