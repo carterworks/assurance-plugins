@@ -25,7 +25,19 @@ import {
   TableBody,
   TableHeader,
   TableView,
-  defaultTheme
+  View,
+  DialogTrigger,
+  Text,
+  Dialog,
+  Heading,
+  Header,
+  Content,
+  Button,
+  ButtonGroup,
+  defaultTheme,
+  ActionButton,
+  Well,
+  SpectrumTableProps
 } from "@adobe/react-spectrum";
 import {
   PluginBridgeProvider,
@@ -113,7 +125,12 @@ const rotateTable = (
   return { columnNames, rowNames, data };
 };
 
-type EventsTable = (props: { events: BridgeEvent[] }) => JSX.Element;
+type EventsTable = (
+  props: { events: BridgeEvent[] } & Pick<
+    SpectrumTableProps<string>,
+    "maxHeight" | "maxWidth"
+  >
+) => JSX.Element;
 
 const SimpleTable: EventsTable = ({ events }: { events: BridgeEvent[] }) => {
   const { rowNames, columnNames, data } = rotateTable(events);
@@ -145,22 +162,73 @@ const SimpleTable: EventsTable = ({ events }: { events: BridgeEvent[] }) => {
   );
 };
 
-const ComplexTable: EventsTable = ({ events }: { events: BridgeEvent[] }) => {
+const ComplexTable: EventsTable = ({ events, ...props }) => {
   const { rowNames, columnNames, data } = rotateTable(events);
   return (
-    <TableView>
+    <TableView {...props}>
       <TableHeader>
         {/* Leave an empty column for the row names */}
-        {["", ...columnNames].map((columnName, columnIndex) => (
-          <Column key={`column-${columnIndex}`}>{columnName}</Column>
+        {[" ", ...columnNames].map((columnName, columnIndex) => (
+          <Column
+            minWidth={columnIndex > 0 ? 300 : 150}
+            allowsResizing
+            key={`column-${columnIndex}`}
+          >
+            {columnName}
+          </Column>
         ))}
       </TableHeader>
       <TableBody>
         {data.map((row, rowIndex) => (
           <Row key={`row-${rowIndex}`}>
-            {[rowNames[rowIndex], ...row].map((cellValue, cellIndex) => (
-              <Cell key={`row-${rowIndex}-cell-${cellIndex}`}>{cellValue}</Cell>
-            ))}
+            {[rowNames[rowIndex], ...row].map((cellValue, cellIndex) => {
+              if (cellIndex === 0) {
+                return (
+                  <Cell key={`row-${rowIndex}-cell-${cellIndex}`}>
+                    {cellValue}
+                  </Cell>
+                );
+              }
+              let prettyCellValue = cellValue;
+              try {
+                prettyCellValue = JSON.stringify(
+                  JSON.parse(cellValue),
+                  null,
+                  2
+                );
+              } catch (e) {}
+              return (
+                <Cell
+                  key={`row-${rowIndex}-cell-${cellIndex}`}
+                  textValue={cellValue}
+                >
+                  <DialogTrigger>
+                    <ActionButton isQuiet>
+                      <pre>
+                        <code>{cellValue}</code>
+                      </pre>
+                    </ActionButton>
+                    {close => (
+                      <Dialog>
+                        <Heading>{rowNames[rowIndex]}</Heading>
+                        <Content>
+                          <View>
+                            <pre>
+                              <code>{prettyCellValue}</code>
+                            </pre>
+                          </View>
+                        </Content>
+                        <ButtonGroup>
+                          <Button variant="primary" onPress={close}>
+                            Close
+                          </Button>
+                        </ButtonGroup>
+                      </Dialog>
+                    )}
+                  </DialogTrigger>
+                </Cell>
+              );
+            })}
           </Row>
         ))}
       </TableBody>
@@ -187,7 +255,7 @@ const Inner = () => {
       >
         Use simple table
       </Switch>
-      <Table events={events} />
+      <Table events={events} maxHeight="90vh" maxWidth="100%" />
     </>
   );
 };
