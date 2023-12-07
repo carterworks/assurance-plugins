@@ -16,28 +16,25 @@
  **************************************************************************/
 
 import {
+  ActionButton,
+  Button,
+  ButtonGroup,
   Cell,
   Column,
+  Content,
+  Dialog,
+  DialogTrigger,
+  Heading,
   ProgressCircle,
   Provider,
   Row,
+  SpectrumTableProps,
   Switch,
   TableBody,
   TableHeader,
   TableView,
   View,
-  DialogTrigger,
-  Text,
-  Dialog,
-  Heading,
-  Header,
-  Content,
-  Button,
-  ButtonGroup,
-  defaultTheme,
-  ActionButton,
-  Well,
-  SpectrumTableProps
+  defaultTheme
 } from "@adobe/react-spectrum";
 import {
   PluginBridgeProvider,
@@ -183,6 +180,13 @@ const ComplexTable: EventsTable = ({ events, ...props }) => {
           <Row key={`row-${rowIndex}`}>
             {[rowNames[rowIndex], ...row].map((cellValue, cellIndex) => {
               if (cellIndex === 0) {
+                return (
+                  <Cell key={`row-${rowIndex}-cell-${cellIndex}`}>
+                    {cellValue}
+                  </Cell>
+                );
+              }
+              if (cellValue === "") {
                 return (
                   <Cell key={`row-${rowIndex}-cell-${cellIndex}`}>
                     {cellValue}
