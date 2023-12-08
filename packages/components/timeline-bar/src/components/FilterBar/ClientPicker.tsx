@@ -43,7 +43,6 @@ const getIosLabel = client =>
   || clientInfoIos.getDeviceType(client);
 const getAndroidLabel = client =>
   clientInfoAndroid.getDeviceName(client)
-  || clientInfoAndroid.getModel(client)
   || clientInfoAndroid.getDeviceType(client);
 
 const getLabel = client =>

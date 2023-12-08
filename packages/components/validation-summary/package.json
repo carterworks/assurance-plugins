@@ -1,0 +1,29 @@
+{
+  "name": "@assurance/validation-summary",
+  "version": "1.0.0",
+  "description": "The validation summary for plugin to use",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/"
+  ],
+  "author": "Adobe Systems",
+  "license": "Apache-2.0",
+  "scripts": {
+    "build": "parcel build src/index.ts --cache-dir ./.parcel-cache --no-cache",
+    "start": "parcel src/sample/index.html --cache-dir ./.parcel-cache  --https --cert ../../../certs/server.crt --key ../../../certs/server.key --host localhost.corp.adobe.com -p 4321 --no-cache"
+  },
+  "dependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "@adobe/react-spectrum": "^3.0.0",
+    "@assurance/plugin-bridge-provider": "^1.0.0",
+    "@assurance/common-utils": "^1.0.0",
+    "@spectrum-icons/workflow": "^3.0.0"
+  },
+  "devDependencies": {
+    "parcel": "^2.10.3",
+    "react": "^17.0.2"
+  }
+}

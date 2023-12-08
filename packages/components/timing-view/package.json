@@ -1,7 +1,7 @@
 {
-  "name": "@assurance/timeline-bar",
+  "name": "@assurance/timing-view",
   "version": "1.0.0",
-  "description": "This is a representation of events in a timeline format",
+  "description": "This is a component that visualizes event transactions and how long they take.",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
@@ -9,28 +9,22 @@
     "dist/"
   ],
   "author": "Adobe Systems",
-  "license": "Apache-2.0",
-  "private": false,
+  "license": "Apache2.0",
   "scripts": {
     "build": "parcel build src/index.ts --cache-dir ./.parcel-cache --no-cache",
     "start": "parcel src/index.html --cache-dir ./.parcel-cache  --https --cert ../../../certs/server.crt --key ../../../certs/server.key --host localhost.corp.adobe.com -p 4321 --no-cache"
   },
   "peerDependencies": {
-    "@spectrum-icons/workflow": "^4.2.0",
     "react": "^16.8.6 || ^17.0.0"
-    
   },
   "dependencies": {
-    "@adobe/griffon-toolkit": "^1.3.0",
-    "@adobe/griffon-toolkit-aep-mobile": "^0.12.0",
-    "@adobe/griffon-toolkit-common": "^0.3.3",
     "@adobe/react-spectrum": "^3.32.2",
     "@assurance/common-utils": "^1.0.0",
     "@assurance/plugin-bridge-provider": "1.0.0",
+    "react-xarrows": "^2.0.2",
     "ramda": "^0.29.1"
   },
   "devDependencies": {
-    "@spectrum-icons/workflow": "^4.2.0",
     "parcel": "^2.10.3",
     "react": "^17.0.2"
   }

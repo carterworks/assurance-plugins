@@ -1,0 +1,23 @@
+{
+  "name": "@assurance/nested-table-toolkit",
+  "version": "1.0.0",
+  "description": "A library of functions to help build nested tables",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/"
+  ],
+  "author": "Adobe Systems",
+  "license": "Apache-2.0",
+  "private": false,
+  "scripts": {
+    "build": "parcel build src/index.ts --cache-dir ./.parcel-cache --no-cache"
+  }, 
+  "devDependencies": {
+    "parcel": "^2.10.3"
+  },
+  "dependencies": {
+    "ramda": "^0.29.1"
+  }
+}

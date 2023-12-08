@@ -17,11 +17,13 @@
 
 export type Event = GenericObject & {
   eventNumber: number,
-  timestamp: string,
+  timestamp: number,
   _internal_adb_props?: {
     label: string,
   },
-  type: string
+  payload: GenericObject,
+  type: string,
+  uuid: string
 };
 
 export type GenericObject = Record<string, unknown>;

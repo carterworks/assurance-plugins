@@ -15,32 +15,9 @@
  * from Adobe.
  **************************************************************************/
 
-import React from 'react';
-import { defaultTheme, Provider } from '@adobe/react-spectrum';
-import { 
-  PluginBridgeProvider, 
-  useEnvironment,
-  useFlags,
-  useImsAccessToken,
-  useImsOrg,
-  useNavigationPath,
-  useFilteredEvents,
-  useTenant,
-  useValidation,
-} from '@assurance/plugin-bridge-provider';
+import type { FlatDataRecord } from '@assurance/nested-table-toolkit';
 
-import SampleUI from '../../components/SampleUI';
-
-const App = () => {
-  return (
-    <Provider theme={defaultTheme} colorScheme="light">
-      <PluginBridgeProvider>
-        <SampleUI />
-      </PluginBridgeProvider>
-    </Provider>
-  );
-};
-
-export default App;
-
-
+export type EventData = {
+  eventId: string;
+  values: FlatDataRecord[];
+}

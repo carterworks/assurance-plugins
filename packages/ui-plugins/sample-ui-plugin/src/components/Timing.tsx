@@ -16,31 +16,12 @@
  **************************************************************************/
 
 import React from 'react';
-import { defaultTheme, Provider } from '@adobe/react-spectrum';
-import { 
-  PluginBridgeProvider, 
-  useEnvironment,
-  useFlags,
-  useImsAccessToken,
-  useImsOrg,
-  useNavigationPath,
-  useFilteredEvents,
-  useTenant,
-  useValidation,
-} from '@assurance/plugin-bridge-provider';
+import { TimingView } from '@assurance/timing-view';
+import { useFilteredEvents } from '@assurance/plugin-bridge-provider';
 
-import SampleUI from '../../components/SampleUI';
-
-const App = () => {
-  return (
-    <Provider theme={defaultTheme} colorScheme="light">
-      <PluginBridgeProvider>
-        <SampleUI />
-      </PluginBridgeProvider>
-    </Provider>
-  );
+const Timing = () => {
+  const events = useFilteredEvents();
+  return <TimingView events={events} />;
 };
 
-export default App;
-
-
+export default Timing;

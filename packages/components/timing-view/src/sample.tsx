@@ -2,7 +2,7 @@
  * ADOBE CONFIDENTIAL
  * ___________________
  *
- *  Copyright 2023 Adobe
+ *  Copyright 2022 Adobe
  *  All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
@@ -15,32 +15,8 @@
  * from Adobe.
  **************************************************************************/
 
+import App from './containers/App';
 import React from 'react';
-import { defaultTheme, Provider } from '@adobe/react-spectrum';
-import { 
-  PluginBridgeProvider, 
-  useEnvironment,
-  useFlags,
-  useImsAccessToken,
-  useImsOrg,
-  useNavigationPath,
-  useFilteredEvents,
-  useTenant,
-  useValidation,
-} from '@assurance/plugin-bridge-provider';
+import ReactDOM from 'react-dom';
 
-import SampleUI from '../../components/SampleUI';
-
-const App = () => {
-  return (
-    <Provider theme={defaultTheme} colorScheme="light">
-      <PluginBridgeProvider>
-        <SampleUI />
-      </PluginBridgeProvider>
-    </Provider>
-  );
-};
-
-export default App;
-
-
+ReactDOM.render(<App />, document.getElementById('root'));

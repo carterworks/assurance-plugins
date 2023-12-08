@@ -23,10 +23,16 @@ import Filter from "@spectrum-icons/workflow/Filter";
 import DataRefresh from "@spectrum-icons/workflow/DataRefresh";
 import DataRemove from "@spectrum-icons/workflow/DataRemove";
 
+type Actions = {
+  label: string;
+  action: string;
+  icon?: any;
+}
+
 const FilterButtons = () => {
   const selected = useSelectedEvents();
   
-  const moreActions = [
+  const moreActions: Actions[] = [
     { label: 'Clear session', action: 'clearSession', icon: DataRemove },
     { label: 'Restore session', action: 'restoreSession', icon: DataRefresh },
   ];

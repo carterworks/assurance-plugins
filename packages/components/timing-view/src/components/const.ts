@@ -15,32 +15,4 @@
  * from Adobe.
  **************************************************************************/
 
-import React from 'react';
-import { defaultTheme, Provider } from '@adobe/react-spectrum';
-import { 
-  PluginBridgeProvider, 
-  useEnvironment,
-  useFlags,
-  useImsAccessToken,
-  useImsOrg,
-  useNavigationPath,
-  useFilteredEvents,
-  useTenant,
-  useValidation,
-} from '@assurance/plugin-bridge-provider';
-
-import SampleUI from '../../components/SampleUI';
-
-const App = () => {
-  return (
-    <Provider theme={defaultTheme} colorScheme="light">
-      <PluginBridgeProvider>
-        <SampleUI />
-      </PluginBridgeProvider>
-    </Provider>
-  );
-};
-
-export default App;
-
-
+export const COLORS = ['celery-400', 'orange-400', 'seafoam-400', 'magenta-400', 'yellow-400', 'magenta-400', 'seafoam-400', 'orange-400', 'red-400', 'yellow-400', 'chartreuse-400', 'cyan-400', 'green-400', 'indigo-400']

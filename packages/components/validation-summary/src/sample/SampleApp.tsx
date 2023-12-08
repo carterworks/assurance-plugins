@@ -16,31 +16,23 @@
  **************************************************************************/
 
 import React from 'react';
-import { defaultTheme, Provider } from '@adobe/react-spectrum';
 import { 
-  PluginBridgeProvider, 
-  useEnvironment,
-  useFlags,
-  useImsAccessToken,
-  useImsOrg,
-  useNavigationPath,
-  useFilteredEvents,
-  useTenant,
-  useValidation,
+  PluginBridgeProvider
 } from '@assurance/plugin-bridge-provider';
-
-import SampleUI from '../../components/SampleUI';
+import { defaultTheme, Provider } from '@adobe/react-spectrum';
+import ValidationSummaryItem from '../components/ValidationItem';
 
 const App = () => {
   return (
     <Provider theme={defaultTheme} colorScheme="light">
       <PluginBridgeProvider>
-        <SampleUI />
+      <div>Validation</div>  
+      <ValidationSummaryItem namespace={'aep-consent-configuration'}/>
+      <ValidationSummaryItem namespace={'aep-consent-registered'}/>
+      <ValidationSummaryItem namespace={'aep-consent-status'}/>
       </PluginBridgeProvider>
     </Provider>
   );
 };
 
 export default App;
-
-

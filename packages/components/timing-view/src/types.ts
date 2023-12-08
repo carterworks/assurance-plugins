@@ -15,32 +15,11 @@
  * from Adobe.
  **************************************************************************/
 
-import React from 'react';
-import { defaultTheme, Provider } from '@adobe/react-spectrum';
-import { 
-  PluginBridgeProvider, 
-  useEnvironment,
-  useFlags,
-  useImsAccessToken,
-  useImsOrg,
-  useNavigationPath,
-  useFilteredEvents,
-  useTenant,
-  useValidation,
-} from '@assurance/plugin-bridge-provider';
+import type { Event } from "@assurance/common-utils";
 
-import SampleUI from '../../components/SampleUI';
-
-const App = () => {
-  return (
-    <Provider theme={defaultTheme} colorScheme="light">
-      <PluginBridgeProvider>
-        <SampleUI />
-      </PluginBridgeProvider>
-    </Provider>
-  );
+export type Branch = {
+  event: Event;
+  children: Branches;
 };
 
-export default App;
-
-
+export type Branches = Record<string, Branch>;

@@ -39,12 +39,17 @@
   resolved "https://registry.yarnpkg.com/@adobe/react-spectrum-ui/-/react-spectrum-ui-1.2.0.tgz#b1c72d5db6ac84c99fd45ddb3bd8e00bfff9f150"
   integrity sha512-os3EdjfyJbrukLcZ5uYtdFRiDlLB3zq2JoXp19J/IDpZ8btibJeRZYSwjL+LscEiT2pOYaF2McMQdkZTIwnllw==
 
+"@adobe/react-spectrum-workflow@1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@adobe/react-spectrum-workflow/-/react-spectrum-workflow-1.0.2.tgz#382d81df6b3df7c15247d847cc1d483a6e8f6aaf"
+  integrity sha512-4phKdzoH7sPqlIX4kFQNZ8oXRZ4tupBkUoWZq1hRaN551fh8Ne/+Kt/IXyouZWWddLBcUncU2EqdHKInWrtNWw==
+
 "@adobe/react-spectrum-workflow@2.3.4":
   version "2.3.4"
   resolved "https://registry.yarnpkg.com/@adobe/react-spectrum-workflow/-/react-spectrum-workflow-2.3.4.tgz#eec7f2c2d855e72196cbb7572905413a5005c7d9"
   integrity sha512-XPLzIBl58HdLF9WIPB7RDAvVXvCE3SjG+HaWQhW2P9MnxSz1DEA9O7mlTlYblJkMbfk10T/+RFaSupc1yoN+TA==
 
-"@adobe/react-spectrum@3.31.0", "@adobe/react-spectrum@^3.32.2":
+"@adobe/react-spectrum@3.31.0", "@adobe/react-spectrum@^3.0.0", "@adobe/react-spectrum@^3.32.2":
   version "3.31.0"
   resolved "https://registry.yarnpkg.com/@adobe/react-spectrum/-/react-spectrum-3.31.0.tgz#ec09441d2fe0e4c0920eca0bbb3eca59dbd15e78"
   integrity sha512-34QUfqIn34NP8v+WZKdFOS6nKNF8RL/B8Jh6VIo4+7OXdGcnYMZQpZtRiRNKOlwbqYei3yQXuqWFl2EozrYNvA==
@@ -4864,7 +4869,7 @@
     "@react-types/shared" "^3.22.0"
     "@swc/helpers" "^0.5.0"
 
-"@react-spectrum/icon@^3.7.6", "@react-spectrum/icon@^3.7.8":
+"@react-spectrum/icon@^3.3.7", "@react-spectrum/icon@^3.7.6", "@react-spectrum/icon@^3.7.8":
   version "3.7.8"
   resolved "https://registry.yarnpkg.com/@react-spectrum/icon/-/icon-3.7.8.tgz#e831beb7c26cb8382a4244e7277b51e315bcac37"
   integrity sha512-OllOy3+2laBHZNXAsVfy7J7ov9UsT/e6zTeqvWVIhYW8abpIYcCtJWxeaBPubVMcA47NRCLF46sEOuFhnTUxIw==
@@ -6003,7 +6008,15 @@
     "@react-spectrum/icon" "^3.7.8"
     "@swc/helpers" "^0.5.0"
 
-"@spectrum-icons/workflow@^4.2.7":
+"@spectrum-icons/workflow@^3.0.0":
+  version "3.2.5"
+  resolved "https://registry.yarnpkg.com/@spectrum-icons/workflow/-/workflow-3.2.5.tgz#76494d6e7b6db6c14d44a3ddc455e00a7dea983d"
+  integrity sha512-U8OBxHQHCArLIGla+/WEb3rv2/SWjZulDpd4OKRoMtwgsnMPKut7DzDzarowW2wlKlcYVwPpqjhcqyjpYVXdPA==
+  dependencies:
+    "@adobe/react-spectrum-workflow" "1.0.2"
+    "@react-spectrum/icon" "^3.3.7"
+
+"@spectrum-icons/workflow@^4.2.0", "@spectrum-icons/workflow@^4.2.7":
   version "4.2.7"
   resolved "https://registry.yarnpkg.com/@spectrum-icons/workflow/-/workflow-4.2.7.tgz#2e036eb07e2f0314b6184985db766df388125c91"
   integrity sha512-Qrl2VPDsNd6WyEbqSvcMHPPRKHr6hhFcYXuh26h7XosmIf1irHZqvhpBGEJun2ADao4EQkwMUDy+3VSzvxuGIQ==
@@ -8014,7 +8027,7 @@
   resolved "https://registry.yarnpkg.com/@types/pretty-hrtime/-/pretty-hrtime-1.0.3.tgz#ee1bd8c9f7a01b3445786aad0ef23aba5f511a44"
   integrity sha512-nj39q0wAIdhwn7DGUyT9irmsKK1tV0bd5WFEhgpqNTMFZ8cE+jieuTphCW0tfdm47S2zVT5mr09B28b1chmQMA==
 
-"@types/prop-types@*":
+"@types/prop-types@*", "@types/prop-types@^15.7.3":
   version "15.7.11"
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.11.tgz#2596fb352ee96a1379c657734d4b913a613ad563"
   integrity sha512-ga8y9v9uyeiLdpKddhxYQkxNDrfvuPrlFb0N1qnZZByvcElJaXthF1UhvCh9TLWJBEHeNtdnbysW7Y6Uq8CVng==
@@ -17653,6 +17666,15 @@ react-transition-group@^4.4.5:
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
 
+react-xarrows@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/react-xarrows/-/react-xarrows-2.0.2.tgz#7555687612339eaefd4ed55fc5c63f2302726d9c"
+  integrity sha512-tDlAqaxHNmy0vegW/6NdhoWyXJq1LANX/WUAlHyzoHe9BwFVnJPPDghmDjYeVr7XWFmBrVTUrHsrW7GKYI6HtQ==
+  dependencies:
+    "@types/prop-types" "^15.7.3"
+    lodash "^4.17.21"
+    prop-types "^15.7.2"
+
 react@^17.0.2:
   version "17.0.2"
   resolved "https://registry.yarnpkg.com/react/-/react-17.0.2.tgz#d0b5cc516d29eb3eee383f75b62864cfb6800037"
@@ -18518,11 +18540,6 @@ shebang-regex@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/shebang-regex/-/shebang-regex-3.0.0.tgz#ae16f1644d873ecad843b0307b143362d4c42172"
   integrity sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==
-
-shell-quote@^1.6.1:
-  version "1.8.1"
-  resolved "https://registry.yarnpkg.com/shell-quote/-/shell-quote-1.8.1.tgz#6dbf4db75515ad5bac63b4f1894c3a154c766680"
-  integrity sha512-6j1W9l1iAs/4xYBI1SYOVZyFcCis9b4KCLQ8fgAGG07QvzaRLVVRQvAy85yNmmZSjYjg4MWh4gNvlPujU/5LpA==
 
 shellwords@^0.1.1:
   version "0.1.1"

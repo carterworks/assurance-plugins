@@ -21,12 +21,10 @@ import { useSelectedEvents } from "@assurance/plugin-bridge-provider";
 import type { Event } from "@assurance/common-utils";
 import { chooseEventLabel } from "@assurance/common-utils";
 
-const makeLabel = (e: Event) => (e ? (e.timelineDetails || chooseEventLabel(e)) : '');
-
 const SelectedEventPicker = () => {
   const selected = useSelectedEvents();
 
-  if (!selected) { return null; }
+  if (!selected || !selected[0]) { return null; }
   
   // TODO: Hightlights
 
@@ -35,7 +33,7 @@ const SelectedEventPicker = () => {
       {selected.length > 1 ? (
         <Text>Multiple selected events</Text>
       ) : (
-        <Text>{makeLabel(selected[0])}</Text>
+        <Text>{chooseEventLabel(selected[0])}</Text>
       )}
     </Flex>
   );

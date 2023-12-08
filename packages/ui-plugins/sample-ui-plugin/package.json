@@ -13,7 +13,10 @@
     "start": "parcel src/index.html --cache-dir ./.parcel-cache  --https --cert ../../../certs/server.crt --key ../../../certs/server.key --host localhost.corp.adobe.com -p 4321 --no-cache"
   },
   "dependencies": {
-    "@assurance/plugin-bridge-provider": "1.0.0"
+    "@assurance/event-data-viewer": "1.0.0",
+    "@assurance/plugin-bridge-provider": "1.0.0",
+    "@assurance/timeline-bar": "1.0.0",
+    "@assurance/timing-view": "1.0.0"
   },
   "devDependencies": {
     "parcel": "^2.10.3"

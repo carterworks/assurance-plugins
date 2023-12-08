@@ -18,11 +18,10 @@
 import { Flex, View, TooltipTrigger, Tooltip, ActionButton } from '@adobe/react-spectrum';
 import { chooseEventLabel, getTimestampText } from "@assurance/common-utils";
 import React from 'react';
+import type { Event } from '@assurance/common-utils';
 
 const BOX_HEIGHT = 16;
 const SCRUBBER_LINE_HEIGHT = 24;
-
-const makeLabel = (e: Event) => (e ? (e.timelineDetails || chooseEventLabel(e)) : '');
 
 const ScrubberLine = ({
   highlightColor,
@@ -61,7 +60,7 @@ const ScrubberLine = ({
       </View>
     )}
     <View marginTop={16}>
-      <TooltipTrigger delay={50} closeDelay={0}>
+      <TooltipTrigger delay={50}>
         <ActionButton
           onPress={onPress}
           isQuiet
@@ -99,7 +98,7 @@ const ScrubberLine = ({
           </View>
         </ActionButton>
         <Tooltip>
-          <div>{makeLabel(event)}</div>
+          <div>{chooseEventLabel(event)}</div>
           <div style={{ fontSize: 11 }}>{getTimestampText(event.timestamp)}</div>
         </Tooltip>
       </TooltipTrigger>

@@ -16,31 +16,29 @@
  **************************************************************************/
 
 import React from 'react';
-import { defaultTheme, Provider } from '@adobe/react-spectrum';
 import { 
-  PluginBridgeProvider, 
-  useEnvironment,
-  useFlags,
-  useImsAccessToken,
-  useImsOrg,
-  useNavigationPath,
-  useFilteredEvents,
-  useTenant,
-  useValidation,
+  PluginBridgeProvider, useFilteredEvents
 } from '@assurance/plugin-bridge-provider';
+import { PluginView, TimelineToolbar } from '@assurance/timeline-bar';
+import { defaultTheme, Provider } from '@adobe/react-spectrum';
+import TimingView from '../../components/TimingView';
 
-import SampleUI from '../../components/SampleUI';
+const Inner = () => {
+  const events = useFilteredEvents();
+  return <TimingView events={events} />;
+};
 
 const App = () => {
   return (
     <Provider theme={defaultTheme} colorScheme="light">
       <PluginBridgeProvider>
-        <SampleUI />
+        <PluginView>
+          <Inner />
+          <TimelineToolbar />
+        </PluginView>
       </PluginBridgeProvider>
     </Provider>
   );
 };
 
 export default App;
-
-

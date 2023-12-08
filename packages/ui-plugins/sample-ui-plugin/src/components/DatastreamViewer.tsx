@@ -16,31 +16,34 @@
  **************************************************************************/
 
 import React from 'react';
-import { defaultTheme, Provider } from '@adobe/react-spectrum';
-import { 
-  PluginBridgeProvider, 
-  useEnvironment,
-  useFlags,
-  useImsAccessToken,
-  useImsOrg,
-  useNavigationPath,
-  useFilteredEvents,
-  useTenant,
-  useValidation,
-} from '@assurance/plugin-bridge-provider';
+import { EventDataViewer } from '@assurance/event-data-viewer';
+import { useFilteredEvents } from '@assurance/plugin-bridge-provider';
 
-import SampleUI from '../../components/SampleUI';
+const prepareEvents = (events) => {
+  const results = (events || []).map(
+    (event) => {
+      const message = event.payload?.messages?.[1];
+      let data: any = {};
 
-const App = () => {
-  return (
-    <Provider theme={defaultTheme} colorScheme="light">
-      <PluginBridgeProvider>
-        <SampleUI />
-      </PluginBridgeProvider>
-    </Provider>
-  );
+      try {
+        data = JSON.parse(message);
+      } catch (e) { }
+
+      return {
+        eventId: event.uuid,
+        values: data
+      }
+    }
+  )
+
+  return results;
 };
 
-export default App;
+const Timing = () => {
+  const events = useFilteredEvents({
+    matchers: ['payload.name==`datastream`']
+  });
+  return <EventDataViewer data={prepareEvents(events)} />;
+};
 
-
+export default Timing;

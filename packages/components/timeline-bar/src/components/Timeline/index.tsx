@@ -52,7 +52,7 @@ const Timeline = () => {
   useWindowSize();
 
   useEffect(() => {
-    setWidth(outer.current?.clientWidth);
+    setWidth((outer.current as any)?.clientWidth);
   }, [outer.current]);
   useScrollPosition(({ currPos }) => {
     setBarPosition(currPos);

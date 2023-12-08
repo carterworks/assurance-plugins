@@ -15,32 +15,34 @@
  * from Adobe.
  **************************************************************************/
 
-import React from 'react';
-import { defaultTheme, Provider } from '@adobe/react-spectrum';
-import { 
-  PluginBridgeProvider, 
-  useEnvironment,
-  useFlags,
-  useImsAccessToken,
-  useImsOrg,
-  useNavigationPath,
-  useFilteredEvents,
-  useTenant,
-  useValidation,
-} from '@assurance/plugin-bridge-provider';
+import { pluck } from 'ramda';
+import React, { useEffect, useMemo } from 'react';
+import { EventData } from '../types';
+import DataViewerTable from './DataViewerTable';
+import { flattenObject } from '@assurance/nested-table-toolkit';
 
-import SampleUI from '../../components/SampleUI';
+type DataViewerProps = {
+  autoExpand?: boolean,
+  data: EventData[]
+}
 
-const App = () => {
+const DataViewer = ({ data, autoExpand }: DataViewerProps) => {
+  const records = useMemo(() => {
+    return (data || []).map((record) => {
+      return {
+        ...record,
+        values: flattenObject(record.values)
+      }
+    });
+  }, [data]);
+
   return (
-    <Provider theme={defaultTheme} colorScheme="light">
-      <PluginBridgeProvider>
-        <SampleUI />
-      </PluginBridgeProvider>
-    </Provider>
+    <DataViewerTable
+      data={records?.[0]?.values}
+      autoExpand={autoExpand}
+    />
   );
+
 };
 
-export default App;
-
-
+export default DataViewer;

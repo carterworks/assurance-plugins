@@ -35,7 +35,7 @@ export function useWindowSize() {
 
 export function useScrollPosition(effect, element, wait = 100) {
   useRef(element);
-  let throttleTimeout: NodeJS.Timeout | null = null;
+  let throttleTimeout: any | null = null;
 
   const callBack = () => {
     effect({ currPos: element.current.scrollLeft });
