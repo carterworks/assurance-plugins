@@ -99,7 +99,6 @@ export const EventsTable = ({
         {[" ", ...columnNames].map((columnName, columnIndex) => (
           <Column
             minWidth={columnIndex === 0 ? 150 : 300}
-            align
             isRowHeader={columnIndex === 0}
             allowsResizing
             key={`column-${columnIndex}`}
